@@ -38,6 +38,7 @@ RUN echo "/usr/lib/libreoffice/program/" > /etc/ld.so.conf.d/openoffice.conf && 
        pip3 install requests && \
        pip3 install flask && \
        pip3 install gunicorn && \
+       pip3 install webvtt && \
        rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
        rm -rf /var/lib/apt/lists/*
 
@@ -71,4 +72,3 @@ WORKDIR "/opt"
 # EXPOSE 8000
 # CMD ["gunicorn", "-b", "0.0.0.0:5000", "handle_requests:app"]
 
-CMD ["/opt/run.sh"]
