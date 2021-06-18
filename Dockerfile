@@ -1,8 +1,5 @@
 FROM rocker/r-base:latest
 
-COPY pptx2ari.sh /usr/local/bin
-COPY gs2ari.sh /usr/local/bin
-
 RUN apt-get update \
   && apt-get install -y \
        libpoppler-cpp-dev \
@@ -34,15 +31,20 @@ RUN installGithub.r --deps TRUE \
 
 RUN echo "/usr/lib/libreoffice/program/" > /etc/ld.so.conf.d/openoffice.conf && \
        ldconfig && \
-       chmod +x /usr/local/bin/pptx2ari.sh && \
-       chmod +x /usr/local/bin/gs2ari.sh && \
        rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
        rm -rf /var/lib/apt/lists/*
 
-RUN useradd avg \
-  && echo "avg:avg" | chpasswd \
-       && mkdir /home/avg \
-       && chown avg:avg /home/avg \
-       && addgroup avg staff
+COPY pptx2ari.sh /opt
+COPY gs2ari.sh /opt
+COPY run.sh /opt
 
-CMD ["bash"]
+RUN chmod +x /opt/pptx2ari.sh && \
+    chmod +x /opt/gs2ari.sh && \
+    chmod +x /opt/run.sh
+
+CMD "/opt/run.sh"
+# RUN useradd avg \
+#   && echo "avg:avg" | chpasswd \
+#        && mkdir /home/avg \
+#        && chown avg:avg /home/avg \
+#        && addgroup avg staff
