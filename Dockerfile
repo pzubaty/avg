@@ -40,9 +40,10 @@ COPY run.sh /opt
 
 RUN chmod +x /opt/pptx2ari.sh && \
     chmod +x /opt/gs2ari.sh && \
-    chmod +x /opt/run.sh
+    chmod +x /opt/run.sh && \
+    chmod -R og+rwx /opt
 
-CMD "/opt/run.sh"
+CMD ["/opt/run.sh"]
 # RUN useradd avg \
 #   && echo "avg:avg" | chpasswd \
 #        && mkdir /home/avg \
