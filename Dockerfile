@@ -43,6 +43,9 @@ RUN chmod +x /opt/pptx2ari.sh && \
     chmod +x /opt/run.sh && \
     chmod -R og+rwx /opt
 
+ENV HOME "/tmp"
+WORKDIR "/opt"
+
 CMD ["/opt/run.sh"]
 # RUN useradd avg \
 #   && echo "avg:avg" | chpasswd \
