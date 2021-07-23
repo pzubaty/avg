@@ -37,14 +37,18 @@ RUN echo "/usr/lib/libreoffice/program/" > /etc/ld.so.conf.d/openoffice.conf && 
 COPY pptx2ari.sh /opt
 COPY gs2ari.sh /opt
 COPY run.sh /opt
+COPY soffice /usr/lib/libreoffice/program/soffice
 
 RUN chmod +x /opt/pptx2ari.sh && \
     chmod +x /opt/gs2ari.sh && \
     chmod +x /opt/run.sh && \
+    chmod +x /usr/lib/libreoffice/program/soffice && \
     chmod -R og+rwx /opt
 
 ENV HOME "/tmp"
 WORKDIR "/opt"
+
+EXPOSE 8787
 
 CMD ["/opt/run.sh"]
 # RUN useradd avg \
