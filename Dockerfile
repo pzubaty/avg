@@ -67,8 +67,9 @@ RUN chmod +x /opt/pptx2ari.sh && \
 ENV HOME "/tmp"
 WORKDIR "/opt"
 
-# CMD ["/opt/run.sh"]
-# CMD ["/opt/handle_requests.py"]
-# EXPOSE 8000
-# CMD ["gunicorn", "-b", "0.0.0.0:5000", "handle_requests:app"]
-
+CMD ["/opt/run.sh"]
+# RUN useradd avg \
+#   && echo "avg:avg" | chpasswd \
+#        && mkdir /home/avg \
+#        && chown avg:avg /home/avg \
+#        && addgroup avg staff
