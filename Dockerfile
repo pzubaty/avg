@@ -42,14 +42,6 @@ RUN echo "/usr/lib/libreoffice/program/" > /etc/ld.so.conf.d/openoffice.conf && 
        rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
        rm -rf /var/lib/apt/lists/*
 
-ENV LD_LIBRARY_PATH=/usr/local/lib
-COPY pptx2ari.sh /opt
-COPY gs2ari.sh /opt
-COPY run.sh /opt
-COPY handle_requests.py /opt
-COPY run_command.py /opt
-COPY soffice /usr/lib/libreoffice/program/soffice
-
 RUN wget https://github.com/RedHatOfficial/RedHatFont/archive/4.0.2.tar.gz -O /root/font.tar.gz && \
        mkdir -pv /root/font && \
        tar zxvf /root/font.tar.gz --directory /root/font && \
@@ -57,6 +49,15 @@ RUN wget https://github.com/RedHatOfficial/RedHatFont/archive/4.0.2.tar.gz -O /r
        cp -v /root/font/*/*/*/*.ttf /usr/share/fonts && \
        fc-cache -f -v && \
        rm -fr /root/font.tar.gz /root/font*
+
+ENV LD_LIBRARY_PATH=/usr/local/lib
+COPY pptx2ari.sh /opt && \
+     gs2ari.sh /opt && \
+     run.sh /opt && \
+     handle_requests.py /opt && \
+     run_command.py /opt && \
+     soffice /usr/lib/libreoffice/program/soffice && \
+     --from=jrottenberg/ffmpeg /usr/local /usr/local/
 
 RUN chmod +x /opt/pptx2ari.sh && \
     chmod +x /opt/gs2ari.sh && \
