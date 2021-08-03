@@ -34,10 +34,12 @@ RUN echo "/usr/lib/libreoffice/program/" > /etc/ld.so.conf.d/openoffice.conf && 
        rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
        rm -rf /var/lib/apt/lists/*
 
-COPY pptx2ari.sh /opt
-COPY gs2ari.sh /opt
-COPY run.sh /opt
-COPY soffice /usr/lib/libreoffice/program/soffice
+ENV LD_LIBRARY_PATH=/usr/local/lib
+COPY pptx2ari.sh /opt && \
+     gs2ari.sh /opt && \
+     run.sh /opt && \
+     soffice /usr/lib/libreoffice/program/soffice && \
+     --from=jrottenberg/ffmpeg /usr/local /usr/local/
 
 RUN chmod +x /opt/pptx2ari.sh && \
     chmod +x /opt/gs2ari.sh && \
@@ -47,8 +49,6 @@ RUN chmod +x /opt/pptx2ari.sh && \
 
 ENV HOME "/tmp"
 WORKDIR "/opt"
-
-EXPOSE 8787
 
 CMD ["/opt/run.sh"]
 # RUN useradd avg \
