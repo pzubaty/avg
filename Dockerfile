@@ -69,8 +69,3 @@ ENV HOME "/tmp"
 WORKDIR "/opt"
 
 CMD ["/opt/run.sh"]
-# RUN useradd avg \
-#   && echo "avg:avg" | chpasswd \
-#        && mkdir /home/avg \
-#        && chown avg:avg /home/avg \
-#        && addgroup avg staff
