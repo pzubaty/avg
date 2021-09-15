@@ -20,7 +20,7 @@ RUN apt-get update \
        cargo \
        default-jre \
        libreoffice-java-common \
-       libreoffice && \
+       libreoffice  && \
        rm -rf /var/lib/apt/lists/*
 
 RUN install2.r --error --deps TRUE \
@@ -31,6 +31,8 @@ RUN installGithub.r --deps TRUE \
 
 RUN echo "/usr/lib/libreoffice/program/" > /etc/ld.so.conf.d/openoffice.conf && \
        ldconfig && \
+       apt-get update && apt-get install -y python3-pip && \
+       pip3 install requests && \
        rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
        rm -rf /var/lib/apt/lists/*
 
@@ -50,8 +52,3 @@ ENV HOME "/tmp"
 WORKDIR "/opt"
 
 CMD ["/opt/run.sh"]
-# RUN useradd avg \
-#   && echo "avg:avg" | chpasswd \
-#        && mkdir /home/avg \
-#        && chown avg:avg /home/avg \
-#        && addgroup avg staff
