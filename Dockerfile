@@ -31,8 +31,10 @@ RUN installGithub.r --deps TRUE \
 
 RUN echo "/usr/lib/libreoffice/program/" > /etc/ld.so.conf.d/openoffice.conf && \
        ldconfig && \
-       apt-get update && apt-get install -y python3-pip && \
+       apt-get update && apt-get install -y python3-pip \
+       procps net-tools && \
        pip3 install requests && \
+       pip3 install flask && \
        rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
        rm -rf /var/lib/apt/lists/*
 
@@ -40,6 +42,8 @@ ENV LD_LIBRARY_PATH=/usr/local/lib
 COPY pptx2ari.sh /opt
 COPY gs2ari.sh /opt
 COPY run.sh /opt
+COPY handle_requests.py /opt
+COPY run_command.py /opt
 COPY soffice /usr/lib/libreoffice/program/soffice
 
 RUN chmod +x /opt/pptx2ari.sh && \
@@ -51,4 +55,5 @@ RUN chmod +x /opt/pptx2ari.sh && \
 ENV HOME "/tmp"
 WORKDIR "/opt"
 
-CMD ["/opt/run.sh"]
+# CMD ["/opt/run.sh"]
+CMD ["/opt/handle_requests.py"]
