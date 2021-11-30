@@ -1,4 +1,5 @@
-FROM rocker/r-base:latest
+# FROM rocker/r-base:latest
+FROM quay.io/pzubaty/rocker-r-base:latest
 
 RUN apt-get update \
   && apt-get install -y \
@@ -35,6 +36,7 @@ RUN echo "/usr/lib/libreoffice/program/" > /etc/ld.so.conf.d/openoffice.conf && 
        procps net-tools && \
        pip3 install requests && \
        pip3 install flask && \
+       pip3 install gunicorn && \
        rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
        rm -rf /var/lib/apt/lists/*
 
@@ -56,4 +58,8 @@ ENV HOME "/tmp"
 WORKDIR "/opt"
 
 # CMD ["/opt/run.sh"]
-CMD ["/opt/handle_requests.py"]
+# CMD ["/opt/handle_requests.py"]
+# EXPOSE 8000
+# CMD ["gunicorn", "-b", "0.0.0.0:5000", "handle_requests:app"]
+
+CMD ["/opt/run.sh"]

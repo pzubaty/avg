@@ -29,7 +29,8 @@ def send_file(url, filename):
     :return: None
     """
     with open(filename, 'rb') as f:
-        files = {'pptx': f}
+        #files = {'pptx': f}
+        files = {'file': f}
 
         r = requests.post(url, files=files)
         print(r.text)

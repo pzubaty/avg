@@ -9,8 +9,8 @@ from flask import Flask, request, send_from_directory
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.relpath('/tmp')
 
-def main():
-    app.run(port=5000)
+#def main():
+    #app.run(port=5000)
 
 @app.route('/')
 def home():
@@ -26,9 +26,11 @@ def handleFileUpload():
 
     msg = 'failed to upload presentation'
 
-    if 'pptx' in request.files:
+    print(request)
+    print(request.files)
+    if 'file' in request.files:
 
-        f = request.files['pptx']
+        f = request.files['file']
 
         if f.filename != '':
             input_file = os.path.join(app.config['UPLOAD_FOLDER'], f.filename)
@@ -37,7 +39,7 @@ def handleFileUpload():
 
             os.environ["AVG_INPUT"] = input_file # TODO: include timestamp in the filename
             os.environ["AVG_OUTPUT"] = os.path.splitext(input_file)[0] + ".mp4"
-            run_command(["pptx2ari.sh"])
+            run_command(["/opt/pptx2ari.sh"])
             return_code, stdout, stderr = run_command(cmd, timeout=1800)
 
             if return_code != 0:
