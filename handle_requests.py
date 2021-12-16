@@ -12,6 +12,17 @@ app.config['UPLOAD_FOLDER'] = os.path.relpath('/tmp')
 #def main():
     #app.run(port=5000)
 
+#def copy_file_to_remote(f, location, password):
+    #"""Copy file to the remote location specified
+
+    #TODO: WIP
+    #:param str f: file to copy
+    #:param str location: URL of the server
+    #:param str password: password to the server
+    #"""
+    #cmd =
+    #return_code, stdout, stderr = run_command(cmd, timeout=1800)
+
 @app.route('/')
 def home():
     return 'This is home page'
@@ -39,12 +50,13 @@ def handleFileUpload():
 
             os.environ["AVG_INPUT"] = input_file # TODO: include timestamp in the filename
             os.environ["AVG_OUTPUT"] = os.path.splitext(input_file)[0] + ".mp4"
-            run_command(["/opt/pptx2ari.sh"])
-            return_code, stdout, stderr = run_command(cmd, timeout=1800)
+            return_code, stdout, stderr = run_command(["/opt/pptx2ari.sh"])
 
             if return_code != 0:
                 raise RuntimeError('pptx2ari failed')
             # TODO: provide result
+
+            #return_code, stdout, stderr = run_command(cmd, timeout=1800)
 
     return msg
 

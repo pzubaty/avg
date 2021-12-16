@@ -33,7 +33,7 @@ RUN installGithub.r --deps TRUE \
 RUN echo "/usr/lib/libreoffice/program/" > /etc/ld.so.conf.d/openoffice.conf && \
        ldconfig && \
        apt-get update && apt-get install -y python3-pip \
-       procps net-tools && \
+       procps net-tools openssh-client && \
        pip3 install requests && \
        pip3 install flask && \
        pip3 install gunicorn && \
