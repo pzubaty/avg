@@ -3,25 +3,13 @@
 """
 
 import os
+import datetime
+
 from run_command import run_command
 from flask import Flask, request, send_from_directory
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.relpath('/tmp')
-
-#def main():
-    #app.run(port=5000)
-
-#def copy_file_to_remote(f, location, password):
-    #"""Copy file to the remote location specified
-
-    #TODO: WIP
-    #:param str f: file to copy
-    #:param str location: URL of the server
-    #:param str password: password to the server
-    #"""
-    #cmd =
-    #return_code, stdout, stderr = run_command(cmd, timeout=1800)
 
 @app.route('/')
 def home():
@@ -32,7 +20,6 @@ def handleFileUpload():
     """Handle file upload
 
     Note: https://zetcode.com/python/requests/
-    TODO: add werkzeug.utils.secure_filename() method
     """
 
     msg = 'failed to upload presentation'
@@ -47,17 +34,15 @@ def handleFileUpload():
             input_file = os.path.join(app.config['UPLOAD_FOLDER'], f.filename)
             f.save(input_file)
             msg = 'presentation uploaded successfully'
+            timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d")
+            suffix = f"-{timestamp}.mp4"
 
             os.environ["AVG_INPUT"] = input_file # TODO: include timestamp in the filename
-            os.environ["AVG_OUTPUT"] = os.path.splitext(input_file)[0] + ".mp4"
+            os.environ["AVG_OUTPUT"] = os.path.splitext(input_file)[0] + suffix
             return_code, stdout, stderr = run_command(["/opt/pptx2ari.sh"])
 
             if return_code != 0:
                 raise RuntimeError('pptx2ari failed')
-            # TODO: provide result
-
-            #return_code, stdout, stderr = run_command(cmd, timeout=1800)
-
     return msg
 
 @app.route('/uploads/<name>')

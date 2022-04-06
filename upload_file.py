@@ -10,7 +10,7 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-u', '--url', dest='url',
                         help='server url',
-                        default='http://localhost:5000/upload', type=str)
+                        default='http://localhost:8080/upload', type=str)
     parser.add_argument('-f', '--filename', dest='filename',
                         help='file to send',
                         default='', type=str)
