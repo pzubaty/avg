@@ -21,7 +21,8 @@ RUN apt-get update \
        cargo \
        default-jre \
        libreoffice-java-common \
-       libreoffice  && \
+       libreoffice \
+       wget && \
        rm -rf /var/lib/apt/lists/*
 
 RUN install2.r --error --deps TRUE \
@@ -47,6 +48,12 @@ COPY run.sh /opt
 COPY handle_requests.py /opt
 COPY run_command.py /opt
 COPY soffice /usr/lib/libreoffice/program/soffice
+
+RUN wget https://github.com/RedHatOfficial/RedHatFont/archive/4.0.2.tar.gz -O /root/RedHatFont.tar.gz && \
+    tar zxvf /root/RedHatFont.tar.gz && \
+    cp -v /root/RedHatFont/RedHatFont-4.0.2/fonts/*/*.ttf /usr/share/fonts && \
+    fc-cache -f -v && \
+    rm -fr /root/RedHatFont.tar.gz /root/RedHatFont* 
 
 RUN chmod +x /opt/pptx2ari.sh && \
     chmod +x /opt/gs2ari.sh && \
