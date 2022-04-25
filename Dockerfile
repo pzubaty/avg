@@ -50,10 +50,12 @@ COPY run_command.py /opt
 COPY soffice /usr/lib/libreoffice/program/soffice
 
 RUN wget https://github.com/RedHatOfficial/RedHatFont/archive/4.0.2.tar.gz -O /root/RedHatFont.tar.gz && \
-    tar zxvf /root/RedHatFont.tar.gz && \
-    cp -v /root/RedHatFont/RedHatFont-4.0.2/fonts/*/*.ttf /usr/share/fonts && \
+    mkdir -pv /root/RedHatFont && \
+    tar zxvf /root/RedHatFont.tar.gz --directory /root/RedHatFont && \
+    ls -al /root/RedHatFont* && \
+    cp -v /root/RedHatFont*/fonts/*/*.ttf /usr/share/fonts && \
     fc-cache -f -v && \
-    rm -fr /root/RedHatFont.tar.gz /root/RedHatFont* 
+    rm -fr /root/RedHatFont.tar.gz /root/RedHatFont*
 
 RUN chmod +x /opt/pptx2ari.sh && \
     chmod +x /opt/gs2ari.sh && \
