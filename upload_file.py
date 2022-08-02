@@ -32,6 +32,8 @@ def send_file(url, filename):
         #files = {'pptx': f}
         files = {'file': f}
 
+        print(f"Uploading {filename} to {url}")
+
         r = requests.post(url, files=files)
         print(r.text)
 

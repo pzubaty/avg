@@ -1,10 +1,20 @@
 #!/usr/bin/env Rscript
 
-input = Sys.getenv("AVG_INPUT", "input.pptx")
+args<-commandArgs(TRUE)
+
+if (length(args)==0) {
+  input = Sys.getenv("AVG_INPUT", "input.pptx")
+  output = Sys.getenv("AVG_OUTPUT", paste(input, "mp4", sep="."))
+} else {
+  input = args[1]
+  output = args[2]
+}
+print(input)
+print(output)
+
 markdown = paste(input, "md", sep=".")
-output = Sys.getenv("AVG_OUTPUT", paste(input, "mp4", sep="."))
 service = Sys.getenv("AVG_SERVICE", "amazon")
-voice = Sys.getenv("AVG_VOICE", "Joey")
+voice = Sys.getenv("AVG_VOICE", "Matthew")
 dpi = as.double(Sys.getenv("AVG_DPI", 300))
 subtitles = Sys.getenv("AVG_SUBTITLES", "TRUE")
 verbose = Sys.getenv("AVG_VERBOSE", "TRUE")
