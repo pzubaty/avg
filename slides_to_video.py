@@ -16,9 +16,11 @@ def run_conversion(input_file, output_file):
     """Run pptx2ari.sh to do the actual conversion to video
     """
     return_code = None
+    voice = input_file.split('__')[-1].split('.')[-2]
+
     with open(f"{input_file}.log", 'wb') as logfile:
-        proc = psutil.Popen(["/opt/pptx2ari.sh", input_file, output_file],
-                            stdout=logfile, stderr=logfile,
+        proc = psutil.Popen(["/opt/pptx2ari.sh", input_file, output_file,
+                             voice], stdout=logfile, stderr=logfile,
                             universal_newlines=True)
         proc.wait()
         # convert srt to vtt

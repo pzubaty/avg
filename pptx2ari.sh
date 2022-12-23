@@ -5,16 +5,18 @@ args<-commandArgs(TRUE)
 if (length(args)==0) {
   input = Sys.getenv("AVG_INPUT", "input.pptx")
   output = Sys.getenv("AVG_OUTPUT", paste(input, "mp4", sep="."))
+  voice = Sys.getenv("AVG_VOICE", "Matthew")
 } else {
   input = args[1]
   output = args[2]
+  voice = args[3]
 }
 print(input)
 print(output)
+print(voice)
 
 markdown = paste(input, "md", sep=".")
 service = Sys.getenv("AVG_SERVICE", "amazon")
-voice = Sys.getenv("AVG_VOICE", "Matthew")
 dpi = as.double(Sys.getenv("AVG_DPI", 300))
 subtitles = Sys.getenv("AVG_SUBTITLES", "TRUE")
 verbose = Sys.getenv("AVG_VERBOSE", "TRUE")

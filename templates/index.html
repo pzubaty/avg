@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Presentation to video</title>
+  </head>
+  <script>
+      function updateSelected(event) {
+          document.getElementById('selection').innerHTML = event.target.value;
+          document.getElementById('selection').value = event.target.value;
+      }
+  </script>
+  <style>
+  #selection {
+    display:none;
+    visibility:hidden;
+  }
+  </style>
+  <body>
+    <h1>Upload new File</h1>
+    <form action="../upload"
+            method="POST"
+            enctype="multipart/form-data">
+        <input type=file name=file />
+        <input id="selection" type=text name=selection></input>
+        <input type=submit value=Upload/>
+    </form>
+    <form action="../selectVoice"
+          method="POST">
+        <label for="voiceSelection">Choose AI voice</label>
+        <select name="voices" onchange="updateSelected(event)">
+          {% for voice in voices %}
+            <option value="{{ voice }}" SELECTED>{{ voice }}</option>
+          {% endfor %}
+        </select>
+    </form>
+    Different voices may fit better. Matthew sounds more lifelike than Joey.
+    <ul>
+    {% for file in files %}
+    <li> <a href="/uploads/{{ file }}">{{ file }}</a></li>
+    {% endfor %}
+    </ul>
+  </body>
+</html>
